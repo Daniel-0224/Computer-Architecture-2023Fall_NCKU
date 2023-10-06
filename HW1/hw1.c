@@ -26,7 +26,7 @@ uint16_t count_leading_zeros(uint64_t x)
     return (64 - (x & 0x7f));
 }
 
-int count_trailing_zeros(uint64_t x)
+int count_tailing_zeros(uint64_t x)
 {
     x = ((x - 1) & (~x));
     int num = count_leading_zeros(x);
@@ -36,9 +36,9 @@ int count_trailing_zeros(uint64_t x)
 
 int main()
 {
-    printf("%d\n",count_trailing_zeros(x0));
-    printf("%d\n",count_trailing_zeros(x1));
-    printf("%d\n",count_trailing_zeros(x2));
+    printf("%d\n",count_tailing_zeros(x0));
+    printf("%d\n",count_tailing_zeros(x1));
+    printf("%d\n",count_tailing_zeros(x2));
     
     return 0;
 }
