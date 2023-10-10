@@ -8,13 +8,24 @@
 .text
 
 main:
-    lw a0, data_2 # a0 = low 32bits of input
-    lw a1, data_1 # a1 = high 32bits of input
+    lw a0, data_2    # a0 = low 32bits of input
+    lw a1, data_1    # a1 = high 32bits of input
     jal ra, count_tailing_zeros
     
 count_tailing_zeros:
-    slt t0, a0, 1 # do input -1
-    sub a2, a0, 1
-    sub a3, a1, t0
+    addi sp, sp, -24
+    sw ra, 16(sp)
+    sw a0, 8(sp)
+    sw a1, 0(sp)
+
+    mv a0, a0
+    mv a1, a1
+
+    slt t0, a0, 1    # do input -1
+    sub s0, a0, 1
+    sub s1, a1, t0
+       
+    not s2, a0       # do ~(input)
+    not s3, a1
 
     
