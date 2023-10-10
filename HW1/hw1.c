@@ -1,37 +1,35 @@
 #include <stdint.h>
 #include <stdio.h>
 
-uint64_t x0 = 0x0000000000000001;
-uint64_t x1 = 0x8000000000000000;
-uint64_t x2 = 0x0012345678057800;
+uint32_t x0 = 0x00000001;
+uint32_t x1 = 0x80000000;
+uint32_t x2 = 0x01234580;
 
 
-uint16_t count_leading_zeros(uint64_t x)
+uint16_t count_leading_zeros(uint32_t x)
 {
     x |= (x >> 1);
     x |= (x >> 2);
     x |= (x >> 4);
     x |= (x >> 8);
     x |= (x >> 16);
-    x |= (x >> 32);
 
     /* count ones (population count) */
-    x -= ((x >> 1) & 0x5555555555555555);
-    x = ((x >> 2) & 0x3333333333333333) + (x & 0x3333333333333333);
-    x = ((x >> 4) + x) & 0x0f0f0f0f0f0f0f0f;
+    x -= ((x >> 1) & 0x55555555);
+    x = ((x >> 2) & 0x33333333) + (x & 0x33333333);
+    x = ((x >> 4) + x) & 0x0f0f0f0f;
     x += (x >> 8);
     x += (x >> 16);
-    x += (x >> 32);
 
-    return (64 - (x & 0x7f));
+    return (32 - (x & 0x3f));
 }
 
-int count_tailing_zeros(uint64_t x)
+int count_tailing_zeros(uint32_t x)
 {
     x = ((x - 1) & (~x));
     int num = count_leading_zeros(x);
     
-    return (64 - num);
+    return (32 - num);
 }
 
 int main()
