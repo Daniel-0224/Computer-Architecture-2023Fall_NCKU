@@ -1,17 +1,20 @@
 .data
-    data_1: .dword 0x0000000000000001
-    data_2: .dword 0x8000000000000000
-    data_3: .dword 0x0012345678057800
+    data_1: .word 0x00000000
+    data_2: .word 0x00000001
+    data_3: .word 0x80000000
+    data_4: .word 0x00000000
+    data_5: .word 0x00123456
+    data_6: .word 0x78057800
 .text
 
 main:
-    la a0, data_1
-    mv t0, a0
-    jal ra, ctz
+    lw a0, data_2 # a0 = low 32bits of input
+    lw a1, data_1 # a1 = high 32bits of input
+    jal ra, count_tailing_zeros
+    
+count_tailing_zeros:
+    slt t0, a0, 1 # do input -1
+    sub a2, a0, 1
+    sub a3, a1, t0
 
-ctz:
-    lw s0, 0(t0) #data's high 32bits in s0
-    lw s1, 4(t0) #data's low 32bits in s1
-    
-    
     
