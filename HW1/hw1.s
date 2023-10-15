@@ -1,31 +1,38 @@
 .data
-    data_1: .word 0x00000000
-    data_2: .word 0x00000001
-    data_3: .word 0x80000000
-    data_4: .word 0x00000000
-    data_5: .word 0x00123456
-    data_6: .word 0x78057800
+    data_1: .word 0x00000001
+    data_2: .word 0x80000000
+    data_3: .word 0x12345678
 .text
 
 main:
-    lw a0, data_2    # a0 = low 32bits of input
-    lw a1, data_1    # a1 = high 32bits of input
+    la t0, data_1
+
+    #load data
+    lw a0, 0(t0)
     jal ra, count_tailing_zeros
     
+    #print result
+    jal ra, print
+    
 count_tailing_zeros:
-    addi sp, sp, -24
-    sw ra, 16(sp)
-    sw a0, 8(sp)
-    sw a1, 0(sp)
+    addi sp, sp, -20
+    sw ra, 0(sp)
+    sw s0, 4(sp)
+    sw s1, 8(sp)
+    sw s2, 12(sp)
+    sw s3, 16(sp)
 
-    mv a0, a0
-    mv a1, a1
+    add s0, zero, a0
+    # (operand-1) & (~operand)
+    sub s1, s0, 1
+    not s2, s0
+    and s3, s1, s2
 
-    slt t0, a0, 1    # do input -1
-    sub s0, a0, 1
-    sub s1, a1, t0
-       
-    not s2, a0       # do ~(input)
-    not s3, a1
+    #clz
+loop:
+    
+    srli t0, s3, 1  # x >> 1
+    or s3, s3, t0   # x |= (x >> 1)
+    
 
     
