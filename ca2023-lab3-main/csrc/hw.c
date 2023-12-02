@@ -32,5 +32,9 @@ int main(){
         x3 = count_leading_zeros(x3);
         y3 = count_leading_zeros(y3);
 
+	*((volatile int *) (4)) = y1-x1;
+    	*((volatile int *) (8)) = x2-y2;
+    	*((volatile int *) (12)) = y3-x3;
+	
         return 0;
 }
