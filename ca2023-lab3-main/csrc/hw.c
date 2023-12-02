@@ -25,15 +25,12 @@ int main(){
         
         x1 = count_leading_zeros(x1);
         y1 = count_leading_zeros(y1);
-        printf("%lu\n",(x1>y1)?(x1-y1):(y1-x1));
         
         x2 = count_leading_zeros(x2);
         y2 = count_leading_zeros(y2);
-        printf("%lu\n",(x2>y2)?(x2-y2):(y2-x2));
         
         x3 = count_leading_zeros(x3);
         y3 = count_leading_zeros(y3);
-        printf("%lu\n",(x3>y3)?(x3-y3):(y3-x3));
 
         return 0;
 }
